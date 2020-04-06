@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 Future<Post> fetchPost() async {
-  final response =
-      await http.get('https://jsonplaceholder.typicode.com/posts/1');
+  final response = await http.get('https://api.kawalcorona.com/positif');
 
   if (response.statusCode == 200) {
     // If the call to the server was successful, parse the JSON.
@@ -18,19 +17,15 @@ Future<Post> fetchPost() async {
 }
 
 class Post {
-  final int userId;
-  final int id;
-  final String title;
-  final String body;
+  final String name;
+  final String value;
 
-  Post({this.userId, this.id, this.title, this.body});
+  Post({this.name, this.value});
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
-      userId: json['userId'],
-      id: json['id'],
-      title: json['title'],
-      body: json['body'],
+      name: json['name'],
+      value: json['value']
     );
   }
 }
@@ -57,20 +52,19 @@ Future<Post> post;
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Fetch Data Contoh by Reza Perdana',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Fetch Data Contoh by Reza'),
+          title: Text('Fetch Data Corona Dunia'),
         ),
         body: Center(
           child: FutureBuilder<Post>(
             future: post,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Text(snapshot.data.title);
+                return Text(snapshot.data.name+" "+snapshot.data.value);
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
