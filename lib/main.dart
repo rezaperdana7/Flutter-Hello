@@ -23,10 +23,7 @@ class Post {
   Post({this.name, this.value});
 
   factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
-      name: json['name'],
-      value: json['value']
-    );
+    return Post(name: json['name'], value: json['value']);
   }
 }
 
@@ -40,7 +37,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-Future<Post> post;
+  Future<Post> post;
 
   @override
   void initState() {
@@ -60,18 +57,22 @@ Future<Post> post;
           title: Text('Fetch Data Corona Dunia'),
         ),
         body: Center(
-          child: FutureBuilder<Post>(
-            future: post,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text(snapshot.data.name+" "+snapshot.data.value);
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-
-              // By default, show a loading spinner.
-              return CircularProgressIndicator();
-            },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FutureBuilder<Post>(
+                future: post,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Text(snapshot.data.name + " " + snapshot.data.value);
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+                  // By default, show a loading spinner.
+                  return CircularProgressIndicator();
+                },
+              ),
+            ],
           ),
         ),
       ),
